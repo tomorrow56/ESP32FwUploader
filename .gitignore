@@ -1,0 +1,25 @@
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build files
+*.o
+*.a
+*.so
+*.dylib
+*.exe
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Arduino IDE
+*.fqbn

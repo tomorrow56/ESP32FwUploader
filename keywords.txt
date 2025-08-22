@@ -1,0 +1,44 @@
+#######################################
+# Syntax Coloring Map For ESP32FwUploader
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ESP32FwUploader	KEYWORD1
+ESP32FwUploaderClass	KEYWORD1
+ESP32Fw_Mode	KEYWORD1
+ESP32Fw_Error	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+begin	KEYWORD2
+loop	KEYWORD2
+setAuth	KEYWORD2
+clearAuth	KEYWORD2
+setAutoReboot	KEYWORD2
+setDebug	KEYWORD2
+onStart	KEYWORD2
+onProgress	KEYWORD2
+onEnd	KEYWORD2
+onError	KEYWORD2
+getLastError	KEYWORD2
+getLastErrorMessage	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+ESP32FW_MODE_FIRMWARE	LITERAL1
+ESP32FW_MODE_FILESYSTEM	LITERAL1
+ESP32FW_ERROR_NONE	LITERAL1
+ESP32FW_ERROR_AUTH_FAILED	LITERAL1
+ESP32FW_ERROR_UPDATE_BEGIN_FAILED	LITERAL1
+ESP32FW_ERROR_UPDATE_WRITE_FAILED	LITERAL1
+ESP32FW_ERROR_UPDATE_END_FAILED	LITERAL1
+ESP32FW_ERROR_FILE_TOO_LARGE	LITERAL1
+ESP32FW_ERROR_INVALID_FILE	LITERAL1
+ESP32FW_ERROR_NETWORK_ERROR	LITERAL1

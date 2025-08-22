@@ -1,0 +1,27 @@
+{
+  "name": "ESP32FwUploader",
+  "version": "1.0.0",
+  "description": "A simple and reliable firmware upload library for ESP32 and ESP8266 with Web UI and Filesystem support",
+  "keywords": "ota, esp32, esp8266, web, ui, filesystem, update, arduino",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ESP32FwUploader.git"
+  },
+  "authors": [
+    {
+      "name": "Manus AI",
+      "email": "ai@example.com",
+      "maintainer": true
+    }
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/yourusername/ESP32FwUploader",
+  "dependencies": {},
+  "frameworks": "arduino",
+  "platforms": ["espressif32", "espressif8266"],
+  "examples": [
+    "examples/BasicOTA/BasicOTA.ino",
+    "examples/AdvancedOTA/AdvancedOTA.ino"
+  ]
+}
+
