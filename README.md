@@ -1,18 +1,18 @@
 # ESP32FwUploader - Arduino OTA Library
 
-A simple and elegant Over-The-Air (OTA) update library for ESP32 and ESP8266 microcontrollers with a beautiful web interface.
+A simple Over-The-Air (OTA) update library for ESP32 and ESP8266 microcontrollers with web interface.
 
 ## Features
 
-- Easy to use - Just 3 lines of code to get started
-- Beautiful responsive web interface
+- 3 lines of code to get started
+- Responsive web interface
 - HTTP Basic Authentication support
-- Mobile-friendly drag & drop file upload
-- Both firmware and filesystem OTA updates
-- Real-time upload progress
-- Comprehensive error handling and logging
-- Customizable callbacks for start, progress, end, and error events
-- Auto-reboot after successful updates
+- Drag & drop file upload
+- Firmware and filesystem OTA updates
+- Upload progress tracking
+- Error handling and logging
+- Callbacks for start, progress, end, and error events
+- Auto-reboot after updates
 
 ## Supported Platforms
 
@@ -65,7 +65,7 @@ void setup() {
   Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
   
-  // Initialize ESP32FwUploader (just 3 lines!)
+  // Initialize ESP32FwUploader
   ESP32FwUploader.setDebug(true);
   ESP32FwUploader.begin(&server);
   server.begin();
@@ -194,12 +194,12 @@ Get the last error message.
 
 ## Web Interface
 
-The library provides a beautiful, responsive web interface accessible at `http://your_device_ip/update`. Features include:
+The library provides a responsive web interface accessible at `http://your_device_ip/update`. Features include:
 
 - Drag & drop file upload
 - Real-time progress bar
 - Firmware/Filesystem mode selection
-- Mobile-friendly design
+- Mobile design
 - Status messages and error reporting
 
 ## File System OTA
@@ -234,20 +234,20 @@ To update the file system (SPIFFS/LittleFS), select "Filesystem" mode in the web
 
 ### Debug Mode
 
-Enable debug mode to get detailed logging:
+Enable debug mode for detailed logging:
 
 ```cpp
 ESP32FwUploader.setDebug(true);
 ```
 
-This will output detailed information about the OTA process to the Serial monitor.
+This outputs information about the OTA process to the Serial monitor.
 
 ## Examples
 
-See the `examples` folder for complete working examples:
+See the `examples` folder for working examples:
 
 - `BasicOTA` - Minimal setup
-- `AdvancedOTA` - Full featured example with authentication and callbacks
+- `AdvancedOTA` - Example with authentication and callbacks
 
 ## License
 
@@ -255,7 +255,7 @@ This library is released under the MIT License. See LICENSE file for details.
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit pull requests or open issues on GitHub.
+Submit pull requests or open issues on GitHub.
 
 ## Changelog
 
