@@ -202,6 +202,71 @@ OTAアップデート終了時（成功または失敗）に呼び出されま�
 - モバイルデザイン
 - ステータスメッセージとエラー報告
 
+### WebUIカスタマイズ
+
+`web_ui.h`ファイルを修正することで、Webインターフェースの外観とテキストをカスタマイズできます。
+
+#### カラーモード選択
+
+ライトテーマとダークテーマから選択するには、希望するモードのコメントを外してください：
+
+```cpp
+// WebUI Color Mode Selection
+#define WEB_UI_LIGHT_MODE
+// #define WEB_UI_DARK_MODE
+```
+
+#### テキストカスタマイズ
+
+タイトル、ロゴ、サブタイトルのテキストをカスタマイズできます：
+
+```cpp
+// Common Text Definitions
+#define WEB_UI_TITLE "ESP32 Firmware Uploader"
+#define WEB_UI_LOGO_TEXT "ESP32FwUploader"
+#define WEB_UI_SUBTITLE_TEXT "Over-The-Air Update System"
+```
+
+#### ライトモードの配色
+
+`WEB_UI_LIGHT_MODE`が定義されている場合、以下の配色が使用されます：
+
+```cpp
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#FFFFFF"
+#define WEB_UI_TEXT_COLOR "#333333"
+#define WEB_UI_LOGO_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#6C757D"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#f8f9ff"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#f0f4ff"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#f8f9fa"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#333333"
+```
+
+#### ダークモードの配色
+
+`WEB_UI_DARK_MODE`が定義されている場合、以下のダーク配色が適用されます：
+
+```cpp
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#2C3E50"
+#define WEB_UI_TEXT_COLOR "#F0F0F0"
+#define WEB_UI_LOGO_COLOR "#4A90E2"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#0056B3"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#5A6268"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#34495e"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#3c5a70"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#3c4a5c"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#F0F0F0"
+```
+
+これらの色は適切なコントラストを提供し、暗い環境での視認性を向上させます。
+
 ## ファイルシステムOTA
 
 ファイルシステム（SPIFFS/LittleFS）をアップデートするには、Webインターフェースで「Filesystem」モードを選択し、ファイルシステムイメージファイルをアップロードしてください。

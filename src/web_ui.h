@@ -3,6 +3,48 @@
 
 #include <Arduino.h>
 
+// WebUI Color Mode Selection
+#define WEB_UI_LIGHT_MODE
+// #define WEB_UI_DARK_MODE
+
+// Common Text Definitions
+#define WEB_UI_TITLE "ESP32 Firmware Uploader"
+#define WEB_UI_LOGO_TEXT "ESP32FwUploader"
+#define WEB_UI_SUBTITLE_TEXT "Over-The-Air Update System"
+
+// Color Definitions for Light Mode
+#ifdef WEB_UI_LIGHT_MODE
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#FFFFFF"
+#define WEB_UI_TEXT_COLOR "#333333"
+#define WEB_UI_LOGO_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#6C757D"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#f8f9ff"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#f0f4ff"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#f8f9fa"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#333333"
+#endif
+
+// Color Definitions for Dark Mode
+#ifdef WEB_UI_DARK_MODE
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#2C3E50"
+#define WEB_UI_TEXT_COLOR "#F0F0F0"
+#define WEB_UI_LOGO_COLOR "#4A90E2"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#0056B3"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#5A6268"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#34495e"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#3c5a70"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#3c4a5c"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#F0F0F0"
+#endif
+
 extern const char ESP32FW_HTML[];
 
 #endif
+

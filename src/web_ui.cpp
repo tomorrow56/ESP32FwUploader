@@ -6,7 +6,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OTA Update - Over-The-Air Update</title>
+    <title>)rawliteral" WEB_UI_TITLE R"rawliteral(</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +16,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: )rawliteral" WEB_UI_BACKGROUND_COLOR R"rawliteral(;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,7 +25,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .container {
-            background: white;
+            background: )rawliteral" WEB_UI_CONTAINER_BACKGROUND_COLOR R"rawliteral(;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             padding: 40px;
@@ -37,12 +37,12 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         .logo {
             font-size: 2.5em;
             font-weight: bold;
-            color: #667eea;
+            color: )rawliteral" WEB_UI_LOGO_COLOR R"rawliteral(;
             margin-bottom: 10px;
         }
         
         .subtitle {
-            color: #666;
+            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
             margin-bottom: 30px;
             font-size: 1.1em;
         }
@@ -58,13 +58,13 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .upload-area:hover {
-            border-color: #667eea;
-            background-color: #f8f9ff;
+            border-color: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
+            background-color: )rawliteral" WEB_UI_UPLOAD_AREA_HOVER_COLOR R"rawliteral(;
         }
         
         .upload-area.dragover {
-            border-color: #667eea;
-            background-color: #f0f4ff;
+            border-color: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
+            background-color: )rawliteral" WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR R"rawliteral(;
             transform: scale(1.02);
         }
         
@@ -75,7 +75,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .upload-text {
-            color: #666;
+            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
             font-size: 1.1em;
             margin-bottom: 15px;
         }
@@ -85,8 +85,8 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
+            color: )rawliteral" WEB_UI_PRIMARY_BUTTON_TEXT_COLOR R"rawliteral(;
             border: none;
             padding: 15px 30px;
             border-radius: 25px;
@@ -124,13 +124,13 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
             width: 0%;
             transition: width 0.3s ease;
         }
         
         .progress-text {
-            color: #666;
+            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
             font-size: 0.9em;
         }
         
@@ -161,7 +161,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
             display: inline-block;
             margin: 0 15px;
             cursor: pointer;
-            color: #666;
+            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
         }
         
         .mode-selector input[type="radio"] {
@@ -169,7 +169,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .file-info {
-            background-color: #f8f9fa;
+            background-color: )rawliteral" WEB_UI_FILE_INFO_BACKGROUND_COLOR R"rawliteral(;
             border-radius: 10px;
             padding: 15px;
             margin: 15px 0;
@@ -178,12 +178,12 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         .file-name {
             font-weight: bold;
-            color: #333;
+            color: )rawliteral" WEB_UI_FILE_INFO_TEXT_COLOR R"rawliteral(;
             margin-bottom: 5px;
         }
         
         .file-size {
-            color: #666;
+            color: )rawliteral" WEB_UI_FILE_INFO_TEXT_COLOR R"rawliteral(;
             font-size: 0.9em;
         }
         
@@ -205,8 +205,8 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
 </head>
 <body>
     <div class="container">
-        <div class="logo">OTA Update</div>
-        <div class="subtitle">Over-The-Air Update System</div>
+        <div class="logo">)rawliteral" WEB_UI_LOGO_TEXT R"rawliteral(</div>
+        <div class="subtitle">)rawliteral" WEB_UI_SUBTITLE_TEXT R"rawliteral(</div>
         
         <div class="mode-selector">
             <label>

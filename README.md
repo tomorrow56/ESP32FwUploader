@@ -202,6 +202,71 @@ The library provides a responsive web interface accessible at `http://your_devic
 - Mobile design
 - Status messages and error reporting
 
+### WebUI Customization
+
+You can customize the appearance and text of the web interface by modifying the `web_ui.h` file.
+
+#### Color Mode Selection
+
+Choose between light and dark themes by uncommenting the desired mode:
+
+```cpp
+// WebUI Color Mode Selection
+#define WEB_UI_LIGHT_MODE
+// #define WEB_UI_DARK_MODE
+```
+
+#### Text Customization
+
+Customize the title, logo, and subtitle text:
+
+```cpp
+// Common Text Definitions
+#define WEB_UI_TITLE "ESP32 Firmware Uploader"
+#define WEB_UI_LOGO_TEXT "ESP32FwUploader"
+#define WEB_UI_SUBTITLE_TEXT "Over-The-Air Update System"
+```
+
+#### Light Mode Colors
+
+When `WEB_UI_LIGHT_MODE` is defined, the following color scheme is used:
+
+```cpp
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#FFFFFF"
+#define WEB_UI_TEXT_COLOR "#333333"
+#define WEB_UI_LOGO_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#007BFF"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#6C757D"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#f8f9ff"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#f0f4ff"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#f8f9fa"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#333333"
+```
+
+#### Dark Mode Colors
+
+When `WEB_UI_DARK_MODE` is defined, the following dark color scheme is applied:
+
+```cpp
+#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)"
+#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#2C3E50"
+#define WEB_UI_TEXT_COLOR "#F0F0F0"
+#define WEB_UI_LOGO_COLOR "#4A90E2"
+#define WEB_UI_PRIMARY_BUTTON_COLOR "#0056B3"
+#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_SECONDARY_BUTTON_COLOR "#5A6268"
+#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
+#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#34495e"
+#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#3c5a70"
+#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#3c4a5c"
+#define WEB_UI_FILE_INFO_TEXT_COLOR "#F0F0F0"
+```
+
+These colors provide appropriate contrast and better visibility in low-light environments.
+
 ## File System OTA
 
 To update the file system (SPIFFS/LittleFS), select "Filesystem" mode in the web interface and upload a filesystem image file.
