@@ -25,6 +25,7 @@ void setup() {
   
   // Initialize ESP32FwUploader with authentication and callbacks
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // Enable light mode
   ESP32FwUploader.setAuth("admin", "password123");
   ESP32FwUploader.setAutoReboot(true);
   

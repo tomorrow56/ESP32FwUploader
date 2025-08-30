@@ -1,12 +1,17 @@
 # IDE files
 .vscode/
+{{ ... }}
 .idea/
 *.swp
 *.swo
 *~
 
-# OS files
+# OS# MacOS
 .DS_Store
+._*
+
+# Analysis files
+ANALYZE.md
 Thumbs.db
 ._*
 

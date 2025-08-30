@@ -67,6 +67,7 @@ void setup() {
   
   // ESP32FwUploaderを初期化
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // ライトモードを有効化
   ESP32FwUploader.begin(&server);
   server.begin();
   
@@ -103,6 +104,7 @@ void setup() {
   
   // ESP32FwUploaderを設定
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // ライトモードを有効化
   ESP32FwUploader.setAuth("admin", "password123");
   ESP32FwUploader.setAutoReboot(true);
   
@@ -154,10 +156,13 @@ OTAインターフェースのHTTP Basic認証を有効にします。
 アップデート成功後の自動再起動を有効または無効にします（デフォルト: true）。
 
 #### `void setDebug(bool enable)`
-Serialへのデバッグログを有効または無効にします。
+デバッグログをシリアルに出力するかどうかを設定します。
+
+#### `void setDarkMode(bool enable)`
+Webインターフェースのカラーモードを設定します（trueでダークモード、falseでライトモード）。
 
 #### `void loop()`
-再起動タイミングを処理するため、メインループで呼び出す必要があります。
+メインループで呼び出す必要があります。アップデート成功後の自動再起動を処理します。
 
 ### コールバック
 
@@ -206,14 +211,24 @@ OTAアップデート終了時（成功または失敗）に呼び出されま�
 
 `web_ui.h`ファイルを修正することで、Webインターフェースの外観とテキストをカスタマイズできます。
 
-#### カラーモード選択
+#### 動的カラーモード
 
-ライトテーマとダークテーマから選択するには、希望するモードのコメントを外してください：
+ライブラリはAPIメソッドを通じてカラーモード切り替えをサポートしています：
 
 ```cpp
-// WebUI Color Mode Selection
-#define WEB_UI_LIGHT_MODE
-// #define WEB_UI_DARK_MODE
+ESP32FwUploader.setDarkMode(true);   // ダークモードを有効
+ESP32FwUploader.setDarkMode(false);  // ライトモードを有効
+```
+
+実行時に内部変数にアクセスしてモードを動的に変更することも可能です：
+
+```cpp
+// ダークモード状態の外部変数
+extern bool _webui_dark_mode;
+
+// 実行時にモード変更
+_webui_dark_mode = true;   // ダークモードに切り替え
+_webui_dark_mode = false;  // ライトモードに切り替え
 ```
 
 #### テキストカスタマイズ
@@ -227,45 +242,39 @@ OTAアップデート終了時（成功または失敗）に呼び出されま�
 #define WEB_UI_SUBTITLE_TEXT "Over-The-Air Update System"
 ```
 
-#### ライトモードの配色
+#### 色定数
 
-`WEB_UI_LIGHT_MODE`が定義されている場合、以下の配色が使用されます：
+配色は`web_ui.h`で宣言され、`web_ui.cpp`で定義されている定数変数を使用しています：
 
+**ライトモードの色：**
 ```cpp
-#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#FFFFFF"
-#define WEB_UI_TEXT_COLOR "#333333"
-#define WEB_UI_LOGO_COLOR "#007BFF"
-#define WEB_UI_PRIMARY_BUTTON_COLOR "#007BFF"
-#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_SECONDARY_BUTTON_COLOR "#6C757D"
-#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#f8f9ff"
-#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#f0f4ff"
-#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#f8f9fa"
-#define WEB_UI_FILE_INFO_TEXT_COLOR "#333333"
+extern const char* LIGHT_BACKGROUND_COLOR;
+extern const char* LIGHT_CONTAINER_BACKGROUND_COLOR;
+extern const char* LIGHT_TEXT_COLOR;
+extern const char* LIGHT_LOGO_COLOR;
+extern const char* LIGHT_PRIMARY_BUTTON_COLOR;
+extern const char* LIGHT_PRIMARY_BUTTON_TEXT_COLOR;
+extern const char* LIGHT_UPLOAD_AREA_HOVER_COLOR;
+extern const char* LIGHT_UPLOAD_AREA_DRAGOVER_COLOR;
+extern const char* LIGHT_FILE_INFO_BACKGROUND_COLOR;
+extern const char* LIGHT_FILE_INFO_TEXT_COLOR;
 ```
 
-#### ダークモードの配色
-
-`WEB_UI_DARK_MODE`が定義されている場合、以下のダーク配色が適用されます：
-
+**ダークモードの色：**
 ```cpp
-#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)"
-#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#2C3E50"
-#define WEB_UI_TEXT_COLOR "#F0F0F0"
-#define WEB_UI_LOGO_COLOR "#4A90E2"
-#define WEB_UI_PRIMARY_BUTTON_COLOR "#0056B3"
-#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_SECONDARY_BUTTON_COLOR "#5A6268"
-#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#34495e"
-#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#3c5a70"
-#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#3c4a5c"
-#define WEB_UI_FILE_INFO_TEXT_COLOR "#F0F0F0"
+extern const char* DARK_BACKGROUND_COLOR;
+extern const char* DARK_CONTAINER_BACKGROUND_COLOR;
+extern const char* DARK_TEXT_COLOR;
+extern const char* DARK_LOGO_COLOR;
+extern const char* DARK_PRIMARY_BUTTON_COLOR;
+extern const char* DARK_PRIMARY_BUTTON_TEXT_COLOR;
+extern const char* DARK_UPLOAD_AREA_HOVER_COLOR;
+extern const char* DARK_UPLOAD_AREA_DRAGOVER_COLOR;
+extern const char* DARK_FILE_INFO_BACKGROUND_COLOR;
+extern const char* DARK_FILE_INFO_TEXT_COLOR;
 ```
 
-これらの色は適切なコントラストを提供し、暗い環境での視認性を向上させます。
+色をカスタマイズするには、`web_ui.cpp`内の実際の定義を修正してください。これらの定数は異なる照明環境での適切なコントラストと視認性を提供します。
 
 ## ファイルシステムOTA
 
@@ -321,6 +330,11 @@ OTAプロセスの情報がSerialモニターに出力されます。
 ## 貢献
 
 GitHubでプルリクエストの送信やイシューの作成をしてください。
+
+## 謝辞
+
+このライブラリは ElegantOTA (https://github.com/ayushsharma82/ElegantOTA) の機能を参考にしています。
+コードの修正には manus 及び windsurf を使用しています。
 
 ## 変更履歴
 

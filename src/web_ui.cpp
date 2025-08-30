@@ -1,12 +1,85 @@
 #include "web_ui.h"
 
-const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
+// Global variable for dark mode state (default: light mode)
+bool _webui_dark_mode = false;
+
+// Light mode color definitions
+const char* LIGHT_BACKGROUND_COLOR = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+const char* LIGHT_CONTAINER_BACKGROUND_COLOR = "#FFFFFF";
+const char* LIGHT_TEXT_COLOR = "#333333";
+const char* LIGHT_LOGO_COLOR = "#007BFF";
+const char* LIGHT_PRIMARY_BUTTON_COLOR = "#007BFF";
+const char* LIGHT_PRIMARY_BUTTON_TEXT_COLOR = "#FFFFFF";
+const char* LIGHT_UPLOAD_AREA_HOVER_COLOR = "#f8f9ff";
+const char* LIGHT_UPLOAD_AREA_DRAGOVER_COLOR = "#f0f4ff";
+const char* LIGHT_FILE_INFO_BACKGROUND_COLOR = "#f8f9fa";
+const char* LIGHT_FILE_INFO_TEXT_COLOR = "#333333";
+
+// Dark mode color definitions
+const char* DARK_BACKGROUND_COLOR = "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)";
+const char* DARK_CONTAINER_BACKGROUND_COLOR = "#2C3E50";
+const char* DARK_TEXT_COLOR = "#F0F0F0";
+const char* DARK_LOGO_COLOR = "#4A90E2";
+const char* DARK_PRIMARY_BUTTON_COLOR = "#0056B3";
+const char* DARK_PRIMARY_BUTTON_TEXT_COLOR = "#FFFFFF";
+const char* DARK_UPLOAD_AREA_HOVER_COLOR = "#34495e";
+const char* DARK_UPLOAD_AREA_DRAGOVER_COLOR = "#3c5a70";
+const char* DARK_FILE_INFO_BACKGROUND_COLOR = "#3c4a5c";
+const char* DARK_FILE_INFO_TEXT_COLOR = "#F0F0F0";
+
+
+// Function to get current colors based on mode
+const char* getCurrentBackgroundColor() {
+    return _webui_dark_mode ? DARK_BACKGROUND_COLOR : LIGHT_BACKGROUND_COLOR;
+}
+
+const char* getCurrentContainerBackgroundColor() {
+    return _webui_dark_mode ? DARK_CONTAINER_BACKGROUND_COLOR : LIGHT_CONTAINER_BACKGROUND_COLOR;
+}
+
+const char* getCurrentTextColor() {
+    return _webui_dark_mode ? DARK_TEXT_COLOR : LIGHT_TEXT_COLOR;
+}
+
+const char* getCurrentLogoColor() {
+    return _webui_dark_mode ? DARK_LOGO_COLOR : LIGHT_LOGO_COLOR;
+}
+
+const char* getCurrentPrimaryButtonColor() {
+    return _webui_dark_mode ? DARK_PRIMARY_BUTTON_COLOR : LIGHT_PRIMARY_BUTTON_COLOR;
+}
+
+const char* getCurrentPrimaryButtonTextColor() {
+    return _webui_dark_mode ? DARK_PRIMARY_BUTTON_TEXT_COLOR : LIGHT_PRIMARY_BUTTON_TEXT_COLOR;
+}
+
+const char* getCurrentUploadAreaHoverColor() {
+    return _webui_dark_mode ? DARK_UPLOAD_AREA_HOVER_COLOR : LIGHT_UPLOAD_AREA_HOVER_COLOR;
+}
+
+const char* getCurrentUploadAreaDragoverColor() {
+    return _webui_dark_mode ? DARK_UPLOAD_AREA_DRAGOVER_COLOR : LIGHT_UPLOAD_AREA_DRAGOVER_COLOR;
+}
+
+const char* getCurrentFileInfoBackgroundColor() {
+    return _webui_dark_mode ? DARK_FILE_INFO_BACKGROUND_COLOR : LIGHT_FILE_INFO_BACKGROUND_COLOR;
+}
+
+const char* getCurrentFileInfoTextColor() {
+    return _webui_dark_mode ? DARK_FILE_INFO_TEXT_COLOR : LIGHT_FILE_INFO_TEXT_COLOR;
+}
+
+// Static buffer for HTML content
+static String htmlContent;
+
+const char* getWebUIHTML() {
+    htmlContent = String(R"rawliteral(
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>)rawliteral" WEB_UI_TITLE R"rawliteral(</title>
+    <title>)rawliteral") + WEB_UI_TITLE + R"rawliteral(</title>
     <style>
         * {
             margin: 0;
@@ -16,7 +89,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: )rawliteral" WEB_UI_BACKGROUND_COLOR R"rawliteral(;
+            background: )rawliteral" + getCurrentBackgroundColor() + R"rawliteral(;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -25,7 +98,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .container {
-            background: )rawliteral" WEB_UI_CONTAINER_BACKGROUND_COLOR R"rawliteral(;
+            background: )rawliteral" + getCurrentContainerBackgroundColor() + R"rawliteral(;
             border-radius: 20px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.1);
             padding: 40px;
@@ -37,12 +110,12 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         .logo {
             font-size: 2.5em;
             font-weight: bold;
-            color: )rawliteral" WEB_UI_LOGO_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentLogoColor() + R"rawliteral(;
             margin-bottom: 10px;
         }
         
         .subtitle {
-            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentTextColor() + R"rawliteral(;
             margin-bottom: 30px;
             font-size: 1.1em;
         }
@@ -58,13 +131,13 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .upload-area:hover {
-            border-color: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
-            background-color: )rawliteral" WEB_UI_UPLOAD_AREA_HOVER_COLOR R"rawliteral(;
+            border-color: )rawliteral" + getCurrentPrimaryButtonColor() + R"rawliteral(;
+            background-color: )rawliteral" + getCurrentUploadAreaHoverColor() + R"rawliteral(;
         }
         
         .upload-area.dragover {
-            border-color: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
-            background-color: )rawliteral" WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR R"rawliteral(;
+            border-color: )rawliteral" + getCurrentPrimaryButtonColor() + R"rawliteral(;
+            background-color: )rawliteral" + getCurrentUploadAreaDragoverColor() + R"rawliteral(;
             transform: scale(1.02);
         }
         
@@ -75,7 +148,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .upload-text {
-            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentTextColor() + R"rawliteral(;
             font-size: 1.1em;
             margin-bottom: 15px;
         }
@@ -85,8 +158,8 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .btn {
-            background: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
-            color: )rawliteral" WEB_UI_PRIMARY_BUTTON_TEXT_COLOR R"rawliteral(;
+            background: )rawliteral" + getCurrentPrimaryButtonColor() + R"rawliteral(;
+            color: )rawliteral" + getCurrentPrimaryButtonTextColor() + R"rawliteral(;
             border: none;
             padding: 15px 30px;
             border-radius: 25px;
@@ -124,13 +197,13 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         .progress-fill {
             height: 100%;
-            background: )rawliteral" WEB_UI_PRIMARY_BUTTON_COLOR R"rawliteral(;
+            background: )rawliteral" + getCurrentPrimaryButtonColor() + R"rawliteral(;
             width: 0%;
             transition: width 0.3s ease;
         }
         
         .progress-text {
-            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentTextColor() + R"rawliteral(;
             font-size: 0.9em;
         }
         
@@ -161,7 +234,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
             display: inline-block;
             margin: 0 15px;
             cursor: pointer;
-            color: )rawliteral" WEB_UI_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentTextColor() + R"rawliteral(;
         }
         
         .mode-selector input[type="radio"] {
@@ -169,7 +242,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         }
         
         .file-info {
-            background-color: )rawliteral" WEB_UI_FILE_INFO_BACKGROUND_COLOR R"rawliteral(;
+            background-color: )rawliteral" + getCurrentFileInfoBackgroundColor() + R"rawliteral(;
             border-radius: 10px;
             padding: 15px;
             margin: 15px 0;
@@ -178,12 +251,12 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
         
         .file-name {
             font-weight: bold;
-            color: )rawliteral" WEB_UI_FILE_INFO_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentFileInfoTextColor() + R"rawliteral(;
             margin-bottom: 5px;
         }
         
         .file-size {
-            color: )rawliteral" WEB_UI_FILE_INFO_TEXT_COLOR R"rawliteral(;
+            color: )rawliteral" + getCurrentFileInfoTextColor() + R"rawliteral(;
             font-size: 0.9em;
         }
         
@@ -205,8 +278,8 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
 </head>
 <body>
     <div class="container">
-        <div class="logo">)rawliteral" WEB_UI_LOGO_TEXT R"rawliteral(</div>
-        <div class="subtitle">)rawliteral" WEB_UI_SUBTITLE_TEXT R"rawliteral(</div>
+        <div class="logo">)rawliteral" + WEB_UI_LOGO_TEXT + R"rawliteral(</div>
+        <div class="subtitle">)rawliteral" + WEB_UI_SUBTITLE_TEXT + R"rawliteral(</div>
         
         <div class="mode-selector">
             <label>
@@ -386,4 +459,7 @@ const char ESP32FW_HTML[] PROGMEM = R"rawliteral(
 </body>
 </html>
 )rawliteral";
+
+    return htmlContent.c_str();
+}
 

@@ -13,7 +13,7 @@ void ESP32FwUploaderClass::begin(ESP32FW_WEBSERVER *server){
       return _server->requestAuthentication();
     }
     logMessage("Serving OTA web interface");
-    _server->send_P(200, "text/html", ESP32FW_HTML);
+    _server->send(200, "text/html", getWebUIHTML());
   });
 
   // OTA upload endpoint
@@ -214,6 +214,12 @@ void ESP32FwUploaderClass::setAutoReboot(bool enable) {
 void ESP32FwUploaderClass::setDebug(bool enable) {
   _debugEnabled = enable;
   logMessage("Debug logging " + String(enable ? "enabled" : "disabled"));
+}
+
+void ESP32FwUploaderClass::setDarkMode(bool enable) {
+  extern bool _webui_dark_mode;
+  _webui_dark_mode = enable;
+  logMessage("Dark mode " + String(enable ? "enabled" : "disabled"));
 }
 
 void ESP32FwUploaderClass::onStart(std::function<void()> callback) {

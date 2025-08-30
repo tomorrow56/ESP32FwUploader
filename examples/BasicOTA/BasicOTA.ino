@@ -28,6 +28,7 @@ void setup() {
   
   // Initialize ESP32FwUploader with error callback
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // Enable light mode
   ESP32FwUploader.onError([](ESP32Fw_Error error, const String& message) {
     Serial.printf("OTA Error %d: %s\n", error, message.c_str());
   });

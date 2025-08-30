@@ -60,6 +60,7 @@ class ESP32FwUploaderClass{
     void clearAuth();
     void setAutoReboot(bool enable);
     void setDebug(bool enable);
+    void setDarkMode(bool enable);
     
     // Callback functions
     void onStart(std::function<void()> callback);

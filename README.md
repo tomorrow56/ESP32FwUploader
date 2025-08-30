@@ -67,6 +67,7 @@ void setup() {
   
   // Initialize ESP32FwUploader
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // Enable light mode
   ESP32FwUploader.begin(&server);
   server.begin();
   
@@ -103,6 +104,7 @@ void setup() {
   
   // Configure ESP32FwUploader
   ESP32FwUploader.setDebug(true);
+  ESP32FwUploader.setDarkMode(false);  // Enable light mode
   ESP32FwUploader.setAuth("admin", "password123");
   ESP32FwUploader.setAutoReboot(true);
   
@@ -156,8 +158,11 @@ Enable or disable automatic reboot after successful updates (default: true).
 #### `void setDebug(bool enable)`
 Enable or disable debug logging to Serial.
 
+#### `void setDarkMode(bool enable)`
+Set the color mode for the web interface (true for dark mode, false for light mode).
+
 #### `void loop()`
-Must be called in the main loop to handle reboot timing.
+Must be called in the main loop to handle automatic reboot after successful updates.
 
 ### Callbacks
 
@@ -206,14 +211,24 @@ The library provides a responsive web interface accessible at `http://your_devic
 
 You can customize the appearance and text of the web interface by modifying the `web_ui.h` file.
 
-#### Color Mode Selection
+#### Dynamic Color Mode
 
-Choose between light and dark themes by uncommenting the desired mode:
+The library supports color mode switching through the API method:
 
 ```cpp
-// WebUI Color Mode Selection
-#define WEB_UI_LIGHT_MODE
-// #define WEB_UI_DARK_MODE
+ESP32FwUploader.setDarkMode(true);   // Enable dark mode
+ESP32FwUploader.setDarkMode(false);  // Enable light mode
+```
+
+You can also change the mode dynamically at runtime by accessing the internal variable:
+
+```cpp
+// External variable for dark mode state
+extern bool _webui_dark_mode;
+
+// Change mode at runtime
+_webui_dark_mode = true;   // Switch to dark mode
+_webui_dark_mode = false;  // Switch to light mode
 ```
 
 #### Text Customization
@@ -227,45 +242,39 @@ Customize the title, logo, and subtitle text:
 #define WEB_UI_SUBTITLE_TEXT "Over-The-Air Update System"
 ```
 
-#### Light Mode Colors
+#### Color Constants
 
-When `WEB_UI_LIGHT_MODE` is defined, the following color scheme is used:
+The color scheme is defined using constant variables declared in `web_ui.h` and defined in `web_ui.cpp`:
 
+**Light Mode Colors:**
 ```cpp
-#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#FFFFFF"
-#define WEB_UI_TEXT_COLOR "#333333"
-#define WEB_UI_LOGO_COLOR "#007BFF"
-#define WEB_UI_PRIMARY_BUTTON_COLOR "#007BFF"
-#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_SECONDARY_BUTTON_COLOR "#6C757D"
-#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#f8f9ff"
-#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#f0f4ff"
-#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#f8f9fa"
-#define WEB_UI_FILE_INFO_TEXT_COLOR "#333333"
+extern const char* LIGHT_BACKGROUND_COLOR;
+extern const char* LIGHT_CONTAINER_BACKGROUND_COLOR;
+extern const char* LIGHT_TEXT_COLOR;
+extern const char* LIGHT_LOGO_COLOR;
+extern const char* LIGHT_PRIMARY_BUTTON_COLOR;
+extern const char* LIGHT_PRIMARY_BUTTON_TEXT_COLOR;
+extern const char* LIGHT_UPLOAD_AREA_HOVER_COLOR;
+extern const char* LIGHT_UPLOAD_AREA_DRAGOVER_COLOR;
+extern const char* LIGHT_FILE_INFO_BACKGROUND_COLOR;
+extern const char* LIGHT_FILE_INFO_TEXT_COLOR;
 ```
 
-#### Dark Mode Colors
-
-When `WEB_UI_DARK_MODE` is defined, the following dark color scheme is applied:
-
+**Dark Mode Colors:**
 ```cpp
-#define WEB_UI_BACKGROUND_COLOR "linear-gradient(135deg, #2c3e50 0%, #34495e 100%)"
-#define WEB_UI_CONTAINER_BACKGROUND_COLOR "#2C3E50"
-#define WEB_UI_TEXT_COLOR "#F0F0F0"
-#define WEB_UI_LOGO_COLOR "#4A90E2"
-#define WEB_UI_PRIMARY_BUTTON_COLOR "#0056B3"
-#define WEB_UI_PRIMARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_SECONDARY_BUTTON_COLOR "#5A6268"
-#define WEB_UI_SECONDARY_BUTTON_TEXT_COLOR "#FFFFFF"
-#define WEB_UI_UPLOAD_AREA_HOVER_COLOR "#34495e"
-#define WEB_UI_UPLOAD_AREA_DRAGOVER_COLOR "#3c5a70"
-#define WEB_UI_FILE_INFO_BACKGROUND_COLOR "#3c4a5c"
-#define WEB_UI_FILE_INFO_TEXT_COLOR "#F0F0F0"
+extern const char* DARK_BACKGROUND_COLOR;
+extern const char* DARK_CONTAINER_BACKGROUND_COLOR;
+extern const char* DARK_TEXT_COLOR;
+extern const char* DARK_LOGO_COLOR;
+extern const char* DARK_PRIMARY_BUTTON_COLOR;
+extern const char* DARK_PRIMARY_BUTTON_TEXT_COLOR;
+extern const char* DARK_UPLOAD_AREA_HOVER_COLOR;
+extern const char* DARK_UPLOAD_AREA_DRAGOVER_COLOR;
+extern const char* DARK_FILE_INFO_BACKGROUND_COLOR;
+extern const char* DARK_FILE_INFO_TEXT_COLOR;
 ```
 
-These colors provide appropriate contrast and better visibility in low-light environments.
+To customize colors, modify the actual definitions in `web_ui.cpp`. These constants provide appropriate contrast and better visibility in different lighting environments.
 
 ## File System OTA
 
@@ -321,6 +330,11 @@ This library is released under the MIT License. See LICENSE file for details.
 ## Contributing
 
 Submit pull requests or open issues on GitHub.
+
+## Acknowledgments
+
+This library is inspired by the functionality of ElegantOTA (https://github.com/ayushsharma82/ElegantOTA).
+Code modifications were made using manus and windsurf.
 
 ## Changelog
 
